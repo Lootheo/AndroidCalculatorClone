@@ -55,10 +55,12 @@
                 android:src="@drawable/delete_arrow"
                 android:scaleType="fitCenter" />
         </RelativeLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1">
+
 
 
             <TableLayout
@@ -217,6 +219,7 @@
                         android:onClick="ButtonFunction"
                         android:text="+/-"/>
                     <Button android:layout_weight="1"
+                        android:id="@+id/botonIgual"
                         android:layout_height="match_parent"
                         android:background="#4bae50"
                         android:textSize="30dp"
@@ -225,19 +228,18 @@
                         android:text="="/>
                 </TableRow>
             </TableLayout>
-
-            <android.support.v4.widget.DrawerLayout
-                android:layout_width="match_parent"
+            <!--<android.support.v4.widget.DrawerLayout
+                android:layout_width="1dp"
                 android:layout_height="match_parent"
                 tools:openDrawer="start"
+                android:clickable="false"
                 android:id="@+id/drawer_layout">
 
                 <android.support.design.widget.NavigationView
                     android:id="@+id/nav_view"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_gravity="start"
-                    android:fitsSystemWindows="true"
+                    android:layout_gravity="left"
                     >
                     <FrameLayout
                         android:id="@+id/content_frame"
@@ -255,7 +257,8 @@
                     </FrameLayout>
                 </android.support.design.widget.NavigationView>
 
-            </android.support.v4.widget.DrawerLayout>
+            </android.support.v4.widget.DrawerLayout>-->
+
         </RelativeLayout>
     </LinearLayout>
 

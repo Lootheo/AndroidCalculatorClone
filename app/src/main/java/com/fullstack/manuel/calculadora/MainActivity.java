@@ -1,5 +1,7 @@
 package com.fullstack.manuel.calculadora;
 
+import android.icu.text.DecimalFormat;
+import android.renderscript.Double2;
 import android.support.annotation.NonNull;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -26,8 +28,11 @@ import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 
+import net.objecthunter.exp4j.Expression;
+import net.objecthunter.exp4j.ExpressionBuilder;
 
-public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
+
+public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
     private String[] mPlanetTitles;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -38,13 +43,34 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
 
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+       // DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+       // NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        //navigationView.setNavigationItemSelectedListener(this);
+        Button myButton = (Button) findViewById(R.id.botonIgual);
+        myButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                    EditText mainText = (EditText) findViewById(R.id.mainText);
+                    mainText.setText(Evaluate(mainText.getText().toString()));
+            }
+        });
+    }
 
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+    public String Evaluate (String input) {
+        Expression e = new ExpressionBuilder(input)
+                .build();
+        double result = e.evaluate();
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            DecimalFormat format = new DecimalFormat("0.#");
+            return format.format(result);
+        }else{
+            return Double.toString(result);
+        }
+
 
     }
+
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -69,6 +95,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         EditText mainText = (EditText) findViewById(R.id.mainText);
         Button b = (Button)view;
         String input = b.getText().toString();
+        if(mainText.getText().toString()=="0") b.setText("");
         switch (input){
             case "C":
                 mainText.setText("0");
@@ -89,7 +116,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                 mainText.setText(mainText.getText().append("/"));
                 break;
             case "X":
-                mainText.setText(mainText.getText().append("x"));
+                mainText.setText(mainText.getText().append("*"));
                 break;
             case "=":
                 mainText.setText(mainText.getText().append("1"));
@@ -135,20 +162,25 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     }
     public void HistorialFunction(View view){
         Toast.makeText(getApplicationContext(),"Abriendo Historial",Toast.LENGTH_LONG).show();
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        //DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         //ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
         //        this, drawer,  R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         //drawer.setDrawerListener(toggle);
         //toggle.syncState();
-        if(!drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.openDrawer(Gravity.START);
-        }
-        else{
-            drawer.closeDrawer(Gravity.START);
-        }
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        //if(!drawer.isDrawerOpen(GravityCompat.START)) {
+        //    drawer.openDrawer(Gravity.LEFT);
+        //}
+        //else{
+          //  drawer.closeDrawer(Gravity.LEFT);
+        //}
+        //NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        //navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    public void ResultListener(View view)  {
+        EditText mainText = (EditText) findViewById(R.id.mainText);
+        //mainText.setText(Evaluate(mainText.getText().toString()));
     }
 
 }
